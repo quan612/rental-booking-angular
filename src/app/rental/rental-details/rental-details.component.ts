@@ -9,17 +9,23 @@ import { Rental } from '../shared/rental.model';
   styleUrls: ['./rental-details.component.scss'],
 })
 export class RentalDetailsComponent implements OnInit {
+  rental: Rental;
+
   //dependency injection
   constructor(
     private rentalService: RentalService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute
+  ) {}
 
-  rental:Rental;
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {      
+    this.route.params.subscribe((params) => {
       this.rentalService.getRentalById(params.rentalId).subscribe((rental) => {
         this.rental = rental;
-      })
+      });
     });
+  }
+
+  get rentalLocation() {
+    return `${this.rental.city}, ${this.rental.street}`;
   }
 }
