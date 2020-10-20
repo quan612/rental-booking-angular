@@ -1,0 +1,70 @@
+<section id="login">
+  <div class="bwm-form">
+    <div class="row">
+      <div class="col-md-5">
+        <h1>Login</h1>
+        <div *ngIf="message" class="alert alert-success mt-2">
+          {{ message }}
+        </div>
+        <form [formGroup]="loginForm" class="mt-2">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              id="email"
+            />
+            <div
+              *ngIf="email.invalid && !email.pristine"
+              class="alert alert-danger"
+            >
+              <div *ngIf="email.errors.required">Email is required.</div>
+              <div *ngIf="email.errors.pattern">
+                Must be valid email format!
+              </div>
+              <div *ngIf="email.errors.forbiddenEmail">
+                This email is forbidden.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              formControlName="password"
+              type="password"
+              class="form-control"
+              id="password"
+            />
+            <div
+              *ngIf="password.invalid && !password.pristine"
+              class="alert alert-danger"
+            >
+              <div *ngIf="password.errors.required">Password is required.</div>
+              <div *ngIf="password.errors.minlength">
+                Must be longer than 6 characters!
+              </div>
+            </div>
+          </div>
+          <button (click)="login()" type="submit" class="btn main-btn">
+            Submit
+          </button>
+        </form>
+        <!-- forms error-->
+        <div *ngIf="formErrors.length > 0" class="alert alert-danger mt-2">
+          <p *ngFor="let error of formErrors">
+            {{ error.error }}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 ml-auto">
+        <div class="image-container">
+          <h2 class="catchphrase">
+            Hundreds of awesome places in reach of few clicks.
+          </h2>
+          <img src="assets/images/bg-01.jpg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

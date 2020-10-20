@@ -1,0 +1,132 @@
+<section id="register">
+  <div class="app-form">
+    <div class="row">
+      <div class="col-md-5">
+        <h1 class="page-title pb-2">Register</h1>
+        <form
+          [formGroup]="registerForm"
+          [matchValidator]="['password', 'passwordConfirmation']"
+        >
+          <!-- user name  -->
+          <label for="username" class="label-group">
+            <input
+              formControlName="username"
+              type="text"
+              class="input-control"
+              id="username"
+              required
+            />
+            <span>Username</span>
+            <span class="border"></span>
+          </label>
+
+          <div
+            *ngIf="username.invalid && !username.pristine"
+            class="alert alert-danger"
+          >
+            <div *ngIf="username.errors.required">Username is required.</div>
+          </div>
+
+          <!-- email  -->
+          <label for="email" class="label-group">
+            <input
+              formControlName="email"
+              name="email"
+              type="text"
+              class="input-control"
+              id="email"
+              required
+            />
+            <span>Email</span>
+            <span class="border"></span>
+          </label>
+
+          <div
+            *ngIf="email.invalid && !email.pristine"
+            class="alert alert-danger"
+          >
+            <div *ngIf="email.errors.required">Email is required.</div>
+            <div *ngIf="email.errors.pattern">Must be valid email format!</div>
+            <div *ngIf="email.errors.forbiddenEmail">
+              This email is forbidden.
+            </div>
+          </div>
+
+          <!-- password  -->
+          <label for="password" class="label-group">
+            <input
+              formControlName="password"
+              name="password"
+              type="password"
+              class="input-control"
+              required
+            />
+            <span>Password</span>
+            <span class="border"></span>
+          </label>
+
+          <div
+            *ngIf="password.invalid && !password.pristine"
+            class="alert alert-danger"
+          >
+            <div *ngIf="password.errors.required">Password is required.</div>
+            <div *ngIf="password.errors.minlength">
+              Password minimum length is 6.
+            </div>
+          </div>
+
+          <!-- confirm password  -->
+          <label for="passwordConfirmation" class="label-group">
+            <input
+              formControlName="passwordConfirmation"
+              name="passwordConfirmation"
+              type="password"
+              class="input-control"
+            />
+            <span>Confirm Password</span>
+            <span class="border"></span>
+          </label>
+
+          <div
+            *ngIf="
+              passwordConfirmation.invalid && !passwordConfirmation.pristine
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="passwordConfirmation.errors.required">
+              Confirm password is required.
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              registerForm.errors?.matchValidator &&
+              !passwordConfirmation.pristine
+            "
+            class="alert alert-danger"
+          >
+            Password is not match.
+          </div>
+
+          <!-- Submit btn -->
+          <button (click)="register()" type="submit" class="btn main-btn">
+            Submit
+          </button>
+
+          <!-- forms error-->
+          <div *ngIf="formErrors.length > 0" class="alert alert-danger mt-2">
+            <p *ngFor="let error of formErrors">
+              {{ error.error }}
+            </p>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6 ml-auto">
+        <div class="image-container">
+          <h2 class="catchphrase">Registering for rental booking</h2>
+          <img src="assets/images/bg-01.jpg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

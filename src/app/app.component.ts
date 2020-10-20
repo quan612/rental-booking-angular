@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from './auth/shared/user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'booking-new';
+export class AppComponent implements OnInit {
+  constructor(public userService: UserService) {}
+
+  ngOnInit() {
+    this.userService.checkAuthentication();
+  }
+
+  logout = () => {
+    this.userService.logout();
+  };
 }
