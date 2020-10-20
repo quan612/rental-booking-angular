@@ -48,8 +48,6 @@ export class UserService {
   }
 
   logout() {
-    //debugger;
-
     localStorage.removeItem('app_booking_token');
     this.decodedToken = new DecodedToken();
   }
