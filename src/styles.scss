@@ -1,41 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'all-colors';
-@import 'form';
+@import "all-colors";
+@import "form";
+@import "date-picker";
+@import "ngx-smart-modal/ngx-smart-modal";
+@import "ngx-toastr/toastr";
+@import "rental-details";
 
-html, body{
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
-html, body, p {
-    color:$dark-gray-color;
+html,
+body,
+p {
+  color: $dark-gray-color;
 }
 
 .type {
-    &-apartment {
-      color: #a72da3 ;
-    }
-  
-    &-condo {
-      color: #d68000 ;
-    }
-  
-    &-house {
-      color: #bf1818;
-    }
+  &-apartment {
+    color: #a72da3;
+  }
+
+  &-condo {
+    color: #d68000;
+  }
+
+  &-house {
+    color: #bf1818;
+  }
 }
 
 .btn.main-btn {
-  background-color: $dark-purple-color ;
-  color: white ;
+  background-color: $dark-purple-color;
+  color: white;
   font-family: Montserrat-Bold;
   font-size: 1rem;
   font-weight: 700;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   transition: all 0.4s;
 
-  &:hover, &:focus, &:active {
-    background-color: $dark-gray-color ;
-    // border-color:$dark-red-color;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $dark-gray-color;
+    color: white;
+    box-shadow: none;
+  }
+}
+
+.btn.secondary-btn {
+  background-color: white;
+  color: $dark-purple-color;
+  border-color: $dark-purple-color;
+  font-family: Montserrat-Bold;
+  font-size: 1rem;
+
+  transition: all 0.4s;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $dark-purple-color;
     color: white;
     box-shadow: none;
   }

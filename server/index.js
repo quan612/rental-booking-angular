@@ -1,14 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const rentalRoutes = require("./routes/rentals");
 const authRoutes = require("./routes/user");
+const bookingRoutes = require("./routes/booking");
+const imageUploadRoute = require("./routes/image-upload");
+
 const { authUser } = require("./controllers/user");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const mongoose = require("mongoose");
-const config = require("./config/dev");
+const config = require("./config");
 const { errorHandler } = require("./middlewares");
 
 mongoose.connect(
@@ -27,15 +31,21 @@ mongoose.connect(
 app.use(bodyParser.json());
 app.use(errorHandler);
 
-app.get("/api/v1/secret", authUser, (req, res) => {
-  return res.json({ message: "secret route accessed" });
-});
-
 //routes
-app.use("/api/v1/rentals", rentalRoutes);
+app.use("/api/v1/rentals/", rentalRoutes);
 app.use("/api/v1/", authRoutes);
+app.use("/api/v1/bookings/", bookingRoutes);
+app.use("/api/v1/image-upload", imageUploadRoute);
 
-// models
+// for running production build in dist folder
+// if (process.env.NODE_ENV === "production") {
+const distPath = path.join(__dirname, "..", "dist");
+app.use(express.static(distPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(distPath, "index.html"));
+});
+// }
 
 app.listen(PORT, () => {
   console.log("server is running");

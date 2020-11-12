@@ -1,0 +1,50 @@
+<section id="userBookings">
+  <h1 class="page-title">{{ title }}</h1>
+  <div class="row">
+    <ng-container *ngIf="bookings">
+      <div
+        *ngIf="bookings.length === 0 && !isLoading && type === 'received'"
+        class="alert alert-warning"
+      >
+        You have no bookings made by anyone.
+      </div>
+      <div *ngFor="let booking of bookings" class="col-md-4">
+        <div class="card text-center">
+          <div *ngIf="type === 'received'" class="card-header">
+            From: {{ booking.user.username }}
+          </div>
+
+          <div class="card-block">
+            <ng-container>
+              <h4 class="card-title">
+                {{ booking.rental.title }} -
+                {{ booking.rental.city | upper: "firstLetterUpper" }}
+              </h4>
+            </ng-container>
+            <p class="card-text booking-days">
+              {{ booking.startDate | timeFormat }} -
+              {{ booking.endDate | timeFormat }} |
+              {{ booking.totalNights }} nights
+            </p>
+            <p class="card-text">
+              <span>Price: </span>
+              <span class="booking-price-value">${{ booking.price }}</span>
+            </p>
+            <a
+              [routerLink]="'/rentals/' + booking.rental._id"
+              class="btn btn-dark"
+              >Go to Rental</a
+            >
+            <button
+              class="ml-1 btn btn-danger"
+              (click)="deleteBooking(booking._id)"
+            >
+              Delete
+            </button>
+          </div>
+          <!-- <div class="card-footer text-muted">Created at 2020/02/01</div> -->
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</section>

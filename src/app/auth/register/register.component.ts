@@ -46,8 +46,10 @@ export class RegisterComponent implements OnInit {
     });
   };
 
-  register() {
-    if (this.registerForm.invalid) return;
+  register(): void {
+    if (this.registerForm.invalid) {
+      return;
+    }
 
     this.userService.register(this.registerForm).subscribe(
       (res) => {

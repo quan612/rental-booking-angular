@@ -6,13 +6,14 @@ import { catchError, map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import * as moment from 'moment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const jwtHelper = new JwtHelperService();
 
 class DecodedToken {
-  exp: number = 0;
-  username: string = '';
-  id: string = '';
+  exp = 0;
+  username = '';
+  id = '';
 }
 
 @Injectable({
@@ -20,9 +21,8 @@ class DecodedToken {
 })
 export class UserService {
   private decodedToken: DecodedToken;
-  redirectUrl: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.decodedToken = new DecodedToken();
   }
 
@@ -41,49 +41,54 @@ export class UserService {
         return token;
       }),
       catchError((httpErr: HttpErrorResponse) => {
-        console.log(httpErr);
         return throwError([...[], httpErr?.error]);
       })
     );
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('app_booking_token');
     this.decodedToken = new DecodedToken();
   }
 
-  checkAuthentication(): Boolean {
+  checkAuthentication(): boolean {
     const authToken = localStorage.getItem('app_booking_token');
-    if (!authToken) return false;
+    if (!authToken) {
+      return false;
+    }
 
     const decodedToken = jwtHelper.decodeToken(authToken);
-    if (!decodedToken) return false;
+    if (!decodedToken) {
+      return false;
+    }
 
     this.decodedToken = decodedToken;
 
     return true;
   }
 
-  get username() {
+  get username(): string {
     return this.decodedToken.username;
   }
 
-  get isAuthenticated(): Boolean {
+  get isAuthenticated(): boolean {
     const isAuth = moment(Date.now()).isBefore(this.getExpiration);
     return isAuth;
   }
 
-  private async saveToken(token) {
+  private async saveToken(token): Promise<any> {
     const decodedToken = await jwtHelper.decodeToken(token);
 
-    if (!decodedToken) return null;
+    if (!decodedToken) {
+      return null;
+    }
 
     this.decodedToken = decodedToken;
     localStorage.setItem('app_booking_token', token);
     return token;
   }
 
-  private get getExpiration() {
+  private get getExpiration(): moment.Moment {
     return moment.unix(this.decodedToken.exp);
   }
 }

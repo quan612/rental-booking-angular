@@ -12,11 +12,10 @@ exports.errorHandler = (req, res, next) => {
       for (let err in allErrors) {
         errors.push({
           title: err,
-          detail: allErrors[err].message,
+          detail: allErrors[err].detail || allErrors[err].message,
         });
       }
-    } else
-      errors.push({ title: "Db Error", detail: "Oops, something went wrong!" });
+    } else errors.push({ title: "Db Error", detail: error });
 
     return res.status(422).send(errors);
   };

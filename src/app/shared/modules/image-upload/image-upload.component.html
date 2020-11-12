@@ -1,0 +1,67 @@
+<div>
+  <label class="image-upload-container btn main-btn">
+    <span> Select Image </span>
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      (change)="loadImage($event)"
+    />
+  </label>
+
+  <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="3 / 2"
+    format="jpeg"
+    [resizeToWidth]="950"
+    (imageCropped)="imageCropped($event)"
+  >
+  </image-cropper>
+
+  <div *ngIf="selectedImage" class="image-preview-container">
+    <div
+      class="image-preview{{
+        selectedImage.status === 'ERROR' ? '-error' : ''
+      }}"
+    >
+      <img *ngIf="selectedImage.src" [src]="selectedImage.src" />
+    </div>
+
+    <div *ngIf="selectedImage.status === 'PENDING'" class="spinner-container">
+      <app-spinner></app-spinner>
+    </div>
+
+    <div
+      *ngIf="selectedImage.status === 'UPLOADED'"
+      class="alert alert-success mt-1"
+    >
+      Image has been uploaded successfully.
+    </div>
+
+    <div
+      *ngIf="selectedImage.status === 'ERROR'"
+      class="alert alert-danger mt-1"
+    >
+      Image Upload Fail.
+    </div>
+  </div>
+
+  <div *ngIf="selectedImage" class="mt-1">
+    <button
+      *ngIf="selectedImage.status === 'LOADED'"
+      class="btn btn-success mr-1"
+      type="button"
+      (click)="uploadImage()"
+    >
+      Upload
+    </button>
+    <button
+      class="btn btn-secondary"
+      type="button"
+      (click)="cancelImage(fileInput)"
+    >
+      Cancel
+    </button>
+  </div>
+</div>

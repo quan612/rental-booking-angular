@@ -8,7 +8,7 @@ import { UserService } from './user.service';
 export class AuthGuard implements CanActivate {
   constructor(private auth: UserService, private router: Router) {}
 
-  canActivate(_: any, state: RouterStateSnapshot) {
+  canActivate(_: any, state: RouterStateSnapshot): boolean {
     return this.checkIfCanNavigate(state.url);
   }
 
@@ -17,8 +17,11 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    this.auth.redirectUrl = url;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], {
+      queryParams: {
+        redirect: this.router.url,
+      },
+    });
     return false;
   }
 }
@@ -29,7 +32,7 @@ export class AuthGuard implements CanActivate {
 export class GuestGuard implements CanActivate {
   constructor(private auth: UserService, private router: Router) {}
 
-  canActivate(_: any, state: RouterStateSnapshot) {
+  canActivate(_: any, state: RouterStateSnapshot): boolean {
     return this.checkIfCanNavigate();
   }
 

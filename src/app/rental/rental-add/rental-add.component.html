@@ -1,0 +1,156 @@
+<section id="newRental">
+  <div class="app-form">
+    <div class="row">
+      <div class="col-md-5">
+        <h1 *ngIf="isAddMode" class="page-title">Create Rental</h1>
+        <h1 *ngIf="!isAddMode" class="page-title">Edit Rental</h1>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input
+              formControlName="title"
+              type="text"
+              class="form-control"
+              id="title"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="city">City</label>
+            <input
+              formControlName="city"
+              type="text"
+              class="form-control"
+              id="city"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="street">Street</label>
+            <input
+              formControlName="street"
+              type="text"
+              class="form-control"
+              id="street"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select
+              formControlName="category"
+              class="form-control"
+              id="category"
+            >
+              <option *ngFor="let category of rentalCategories">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Image</label>
+            <app-image-upload
+              (imageUpload)="attachImage($event)"
+            ></app-image-upload>
+          </div>
+
+          <div class="form-group">
+            <label for="bedrooms">Rooms</label>
+            <input
+              formControlName="numOfRooms"
+              type="number"
+              class="form-control"
+              id="numOfRooms"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              formControlName="description"
+              rows="5"
+              type="text"
+              class="form-control"
+              id="description"
+            >
+            </textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="dailyRate">Daily Price</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+              <input
+                formControlName="dailyPrice"
+                type="number"
+                class="form-control"
+                id="dailyPrice"
+              />
+            </div>
+          </div>
+
+          <div class="form-group form-check">
+            <label class="form-check-label" for="shared">
+              <input
+                formControlName="shared"
+                type="checkbox"
+                class="form-check-input"
+                id="shared"
+              />
+              Shared
+            </label>
+          </div>
+
+          <div class="form-group">
+            <button
+              *ngIf="isAddMode"
+              [disabled]="isLoading || !hasImage()"
+              (click)="onSubmit()"
+              type="button"
+              class="btn main-btn"
+            >
+              Create
+            </button>
+
+            <button
+              *ngIf="!isAddMode"
+              [disabled]="isLoading"
+              (click)="onSubmit()"
+              type="button"
+              class="btn main-btn"
+            >
+              Update
+            </button>
+
+            <a routerLink="/manage/rentals" class="btn btn-secondary ml-1"
+              >Cancel</a
+            >
+          </div>
+        </form>
+        <div *ngIf="formErrors.length > 0" class="alert alert-danger mt-2">
+          <p *ngFor="let error of formErrors">
+            {{ error.detail ? error.detail : error.error }}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 ml-auto">
+        <div *ngIf="isAddMode" class="image-container">
+          <h2 class="catchphrase">
+            Hundreds of awesome places in reach of few clicks.
+          </h2>
+          <img src="assets/images/create-rental.jpg" alt="" />
+        </div>
+
+        <div
+          *ngIf="!isAddMode && currentRental && currentRental.image"
+          class="image-container"
+        >
+          <img [src]="currentRental.image.url" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

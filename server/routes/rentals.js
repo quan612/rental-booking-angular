@@ -4,15 +4,22 @@ const router = express.Router();
 const {
   getRentals,
   getRentalById,
+  getUserRentals,
   addRental,
-  // deleteRental,
-  // updateRental,
+  deleteRental,
+  updateRental,
+  verifyUser,
 } = require("../controllers/rentals");
 
+const { authUser } = require("../controllers/user");
+
 router.get("", getRentals);
+router.get("/me", authUser, getUserRentals);
 router.get("/:rentalId", getRentalById);
-router.post("", addRental);
-// router.delete("/:rentalId", deleteRental);
-// router.patch("/:rentalId", updateRental);
+router.get("/:rentalId/verify-user", authUser, verifyUser);
+
+router.post("/add", authUser, addRental);
+router.delete("/:rentalId", authUser, deleteRental);
+router.patch("/:rentalId", authUser, updateRental);
 
 module.exports = router;

@@ -9,7 +9,7 @@ import { UserService } from './auth/shared/user.service';
 export class AppComponent implements OnInit {
   constructor(public userService: UserService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userService.checkAuthentication();
   }
 

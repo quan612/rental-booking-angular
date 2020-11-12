@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const config = require("../config/dev");
+const config = require("../config");
 
 exports.register = async (req, res, next) => {
   const { username, email, password, passwordConfirmation } = req.body;
@@ -69,7 +69,10 @@ exports.authUser = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
-    if (!token) return res.status(401).send({ error: "Unauthorized access!" });
+    if (!token)
+      return res
+        .status(401)
+        .send({ error: "Unauthorized access. Please login!" });
 
     const decoded = jwt.verify(token.split(" ")[1], config.JWT_SECRET);
     if (!decoded) return res.status(401).send({ error: "Invalid token!" });
@@ -81,6 +84,7 @@ exports.authUser = async (req, res, next) => {
     res.locals.user = user;
     next();
   } catch (error) {
-    return res.mongoError(err);
+    console.log(error);
+    return res.mongoError(error);
   }
 };

@@ -1,15 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  @Input('isAuthenticated') isAuthenticated: boolean = false;
-  @Input('username') username: string = '';
-  @Input('logout') logout:Function;
-  constructor() {}
+export class HeaderComponent {
+  @Input('isAuthenticated') isAuthenticated = false;
+  @Input('username') username = '';
+  @Input('logout') logout: () => {};
 
-  ngOnInit(): void {}
+  constructor(private router: Router) {}
+
+  searchByCity = (city: string) => {
+    city
+      ? this.router.navigate(['/rentals'], {
+          queryParams: { city },
+          queryParamsHandling: 'merge',
+        })
+      : this.router.navigate(['/rentals']);
+  };
 }

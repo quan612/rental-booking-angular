@@ -1,7 +1,8 @@
-@import 'all-colors';
+@import "all-colors";
 
 a {
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     text-decoration: none;
   }
 }
@@ -9,11 +10,9 @@ a {
 /* SINGLE CARD STYLES*/
 .app-card {
   border: none;
-  transition: all .2s ease-in-out; 
 
-  &:hover{
-      transform:scale(1.05);
-  }
+  margin-bottom: 1rem;
+
   .card-block {
     padding-top: 8px;
 
@@ -22,7 +21,6 @@ a {
       font-weight: 500;
       font-size: 12px;
       text-transform: uppercase;
-      //color: #16861a;
     }
 
     .card-title {
@@ -38,4 +36,14 @@ a {
       margin-bottom: 0;
     }
   }
-}  
+
+  .card-img {
+    min-height: 200px;
+    max-height: 200px;
+
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}

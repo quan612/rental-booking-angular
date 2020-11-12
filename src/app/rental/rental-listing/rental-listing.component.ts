@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Rental } from '../shared/rental.model';
-import { RentalService } from '../shared/rental.service';
+import { ActivatedRoute } from '@angular/router';
+import { Rental } from '../models/rental.model';
+import { RentalService } from '../services/rental.service';
 
 @Component({
   selector: 'app-rental-listing',
@@ -9,12 +10,24 @@ import { RentalService } from '../shared/rental.service';
 })
 export class RentalListingComponent implements OnInit {
   rentals: Rental[] = [];
+  query = '';
+  isLoading = false;
 
-  constructor(private rentalService: RentalService) {}
+  constructor(
+    private rentalService: RentalService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.rentalService.getRentals().subscribe((rentals: Rental[]) => {
-      this.rentals = rentals;
+    this.isLoading = true;
+    this.route.queryParams.subscribe((params) => {
+      this.query = params['city'] ?? '';
+      this.rentalService
+        .getRentals(this.query)
+        .subscribe((rentals: Rental[]) => {
+          this.rentals = rentals;
+          this.isLoading = false;
+        });
     });
   }
 }
