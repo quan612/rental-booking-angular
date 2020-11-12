@@ -1,6 +1,6 @@
 # Booking App
 
-> A booking application built on MEAN stack - MongoDb, Express, Angular, NodeJs.
+> A booking application built on MEAN stack - MongoDb, Express, Angular, NodeJs with TypeScript.
 
 Demo is at: https://booking-angular.herokuapp.com/
 
