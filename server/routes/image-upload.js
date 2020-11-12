@@ -15,7 +15,7 @@ const singleUploadController = (req, res, next) => {
   singleUpload(req, res, (error) => {
     if (error) {
       res.status(422).json({
-        message: `There is an error: ${error.message}`,
+        message: `Error at single upload: ${error}`,
       });
     }
     next();
@@ -42,7 +42,7 @@ router.post("", authUser, singleUploadController, async (req, res, next) => {
     return res.status(200).json({ _id: savedImage._id, url: savedImage.url });
   } catch (error) {
     return res.status(422).json({
-      message: `There is an error: ${error.message}`,
+      message: `Error at post route for image upload: ${error}`,
     });
   }
 });
