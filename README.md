@@ -2,6 +2,8 @@
 
 > A booking application built on MEAN stack - MongoDb, Express, Angular, NodeJs.
 
+Demo is at: https://booking-angular.herokuapp.com/
+
 ## Development server
 Modify the configuration in server/config/dev
 
