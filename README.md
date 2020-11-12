@@ -13,5 +13,6 @@ Modify the configuration in server/config/dev
   CLOUDINARY_API_SECRET: "cloundinary api secret",
  ```
 
-Run `ng serve` for front-end. Navigate to `http://localhost:4200/`. 
+Run `ng serve` for front-end. Navigate to `http://localhost:4200/`.
+
 Run `node server/index.js` for back-end side. Use`http://localhost:3001/` for testing REST API in Postman . 
